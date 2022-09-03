@@ -6,5 +6,5 @@ from .models import Pantry
 class PantrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Pantry
-        fields = ('item', 'date_of_purchase', 'category', 'comments')
+        fields = ('id','item', 'expiration', 'category', 'comments')
         depth = 1
