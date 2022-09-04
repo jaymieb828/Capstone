@@ -20,12 +20,12 @@ def pantry_list(request):
         print(category_name)
 
         
-        items = Pantry.objects.all()
+        Pantry = Pantry.objects.all()
 
         if category_name:
             items = items.filter(cagtegory__name=category_name)
 
-        serializer= PantrySerializer(items, many=True)
+        serializer= PantrySerializer(Pantry, many=True)
         return Response(serializer.data)  
     elif request.method == 'POST':
         serializer = PantrySerializer(data=request.data)
@@ -36,18 +36,18 @@ def pantry_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def items_detail(request, pk):
-    item = get_object_or_404(Pantry, pk=pk)
+def pantry_detail(request, pk):
+    Pantry = get_object_or_404(Pantry, pk=pk)
     if request.method == 'GET':
-        serializer = PantrySerializer(item)
+        serializer = PantrySerializer(Pantry)
         return Response(serializer.data)
     elif request.method == 'PUT':
-        serializer = PantrySerializer(item, data=request.data)
+        serializer = PantrySerializer(Pantry, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
     elif request.method == 'DELETE':
-        item.delete()
+        Pantry.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
         
 
