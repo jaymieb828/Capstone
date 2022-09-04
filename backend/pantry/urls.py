@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [ 
-    path('', views.pantry_list),
-    path('<int:pk>/', views.pantry_detail),
+    path('', views.user_items),
+    path('<int:pk>/', views.get_pantry_items),
 ]
 
