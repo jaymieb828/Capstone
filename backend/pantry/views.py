@@ -14,34 +14,27 @@ from .serializers import PantrySerializer
 def get_pantry_items(request):
     items = Pantry.objects.all()
     serializer = PantrySerializer(items, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def user_items(request):
-    print(
-        'User ', f"{request.user.id} {request.user.email} {request.user.username}")
-    if request.method == 'POST':
-        serializer = PantrySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'GET':
-        items = Pantry.objects.filter(user_id=request.user.id)
-        serializer = PantrySerializer(cars, many=True)
-        return Response(serializer.data)
+def add_new_item(request):
+    serializer = PantrySerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# @api_view(['PUT'])
-# @permission_classes([IsAuthenticated])
-# def update_item(request, pk):
-#     item = get_object_or_404(Pantry, pk=pk)
-#     serializer = PantrySerializer(item, data=request.data)
-#     if serializer.is_valid():
-#         serializer.save(user=request.user)
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_item(request, pk):
+    item = get_object_or_404(Pantry, pk=pk)
+    serializer = PantrySerializer(item, data=request.data)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
    
 
