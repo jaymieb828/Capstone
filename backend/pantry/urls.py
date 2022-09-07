@@ -2,8 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [ 
-    path('<str:id>/', views.add_new_item),
-    path('', views.get_pantry_items),
-    path('int:pk/update/', views.update_item),
+    path('', views.pantry_items),
+    # path('<int:pk>/', views.add_new_item),
+    path('<int:pk>/', views.update_item),
 ]
 
+#GET url valid. Testing complete. Need to debug POST and PUT.
