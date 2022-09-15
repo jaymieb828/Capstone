@@ -33,18 +33,24 @@ def pantry_items(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
    
 
-@api_view(['PUT', 'DELETE'])
+@api_view(['GET','PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def update_item(request, pk):
     item = get_object_or_404(Pantry, pk=pk)
-    serializer = PantrySerializer(item, data=request.data)
-    if serializer.is_valid():
+    if request.method == 'GET':
+        serializer = PantrySerializer(item)
+        return Response(serializer.data)
+    elif request.method == 'PUT': 
+        serializer = PantrySerializer(item, data=request.data)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     elif request.method == 'DELETE':
         item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#create request in views.py insided of Shoppinglist
 
 
 # @api_view(['POST'])
