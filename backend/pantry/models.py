@@ -9,7 +9,8 @@ from shoppinglist.models import ShoppingList
 class Pantry(models.Model):
     item = models.CharField(max_length=255)
     quantity = models.IntegerField()
-    expiration = models.DateField()
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
-    comments = models.CharField(max_length=255)
+    expiration = models.DateField()
     add_to_list=models.CharField(max_length=255)
+    comments = models.CharField(max_length=255)
+    

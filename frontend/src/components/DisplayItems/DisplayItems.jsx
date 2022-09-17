@@ -21,8 +21,8 @@ const DisplayItems = (props) => {
             <tr className = 'header-row'>
                 <th>Item</th>
                 <th>Quantity</th>
-                <th>Expiration</th>
                 <th>Category</th>
+                <th>Expiration</th>
                 <th>Add to List</th>
                 <th>Comments</th>
             </tr>
@@ -41,8 +41,8 @@ const DisplayItems = (props) => {
                 <tr key= {index} className = 'display-rows'>
                     <td>{item.item}</td> 
                     <td>{item.quantity}</td>
-                    <td>{item.expiration}</td> 
                     <td>{item.category_id}</td> 
+                    <td>{item.expiration}</td> 
                     <td>{item.add_to_list}</td> 
                     <td>{item.comments}</td>
                 </tr>

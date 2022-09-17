@@ -6,7 +6,6 @@ from .models import Pantry
 class PantrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Pantry
-        fields = ('id','item', 'quantity', 'expiration', 'category', 'category_id', 'comments', 'add_to_list')
+        fields = ('id','item', 'quantity', 'category', 'expiration', 'add_to_list','comments' )
         depth = 1
 
-    category_id = serializers.IntegerField(write_only = True)

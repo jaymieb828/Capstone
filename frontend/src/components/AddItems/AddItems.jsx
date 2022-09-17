@@ -14,8 +14,8 @@ const CreateItem = (props) => {
         let newItem ={
             'Item': itemName,
             'Quantity': itemQuantity,
-            'Expiration': itemExp,
             'Category': itemCategory,
+            'Expiration': itemExp,
             'Add To Shopping List': itemAddToList,
             'Comments': itemComments
         }
@@ -45,12 +45,12 @@ const CreateItem = (props) => {
                         <input type = 'text' id = 'Quantity' placeholder = 'Quantity Value' value = {itemQuantity} onChange={(event) => setQuantity(event.target.value)}/>
                     </div>
                     <div>
-                        <label className='form-label' htmlFor = 'Expiration'>Expiration:</label>
-                        <input type = 'text' id = 'Expiration' placeholder = 'Expiration Date' value={itemExp} onChange={(event) => setExp(event.target.value)}/> 
+                        <label className='form-label' htmlFor = 'Category'>Category:</label>
+                        <input type = 'text' id = 'Category' placeholder = 'Category' value = {itemCategory} onChange={(event) => setCategory(event.target.value)}/>
                     </div>
                     <div>
-                        <label className='form-label' htmlFor = 'Category'>Category:</label>
-                        <input type = 'date' id = 'Category' placeholder = 'Category' value = {itemCategory} onChange={(event) => setCategory(event.target.value)}/>
+                        <label className='form-label' htmlFor = 'Expiration'>Expiration:</label>
+                        <input type = 'date' id = 'Expiration' placeholder = 'Expiration Date' value={itemExp} onChange={(event) => setExp(event.target.value)}/> 
                     </div>
                     <div>
                         <label className='form-label' htmlFor = 'Add To List'>Add To Shopping List:</label>

@@ -18,11 +18,11 @@ from .serializers import PantrySerializer
 def pantry_items(request):
     
     if request.method == 'GET':
-        items_id = request.query_params.get('id')
-        print (items_id)
+        category_id = request.query_params.get('category')
+        print (category_id)
         items = Pantry.objects.all()
-        if items_id:
-            items = request.filter(items_id__name=items_id)
+        if category_id:
+            items = request.filter(items_id__name=category_id)
         items = Pantry.objects.all()
         serializer = PantrySerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
