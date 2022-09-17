@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import DisplayItems from "../../components/DisplayItems/DisplayItems";
+import CreateItem from "../../components/AddItems/AddItems";
 import axios from "axios";
 
 
@@ -23,14 +24,21 @@ const HomePage = () => {
       Authorization: 'Bearer ' + token
     }
   });
-    setAllItems(response.data)
-    
+    setAllItems(response.data)  
   }
 
+  async function addNewItem(){
+    let response = await axios.post(`http://127.0.0.1:8000/api/pantry/`,{
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  }); 
+  }
 
   return (
     <div className='page-container'>
-      <div><DisplayItems displayItems = {items}/></div> 
+      <div><DisplayItems displayItems = {items}/></div>
+      <div><CreateItem createItem = {items}/></div>
 
       
     </div>
