@@ -9,3 +9,4 @@ class PantrySerializer(serializers.ModelSerializer):
         fields = ('id','item', 'quantity', 'add_to_list', 'category', 'expiration', 'comments' )
         depth = 1
 
+category_id = serializers.IntegerField(write_only = True)
