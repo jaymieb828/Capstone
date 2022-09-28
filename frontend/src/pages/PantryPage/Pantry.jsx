@@ -34,4 +34,4 @@ const PantryPage = () => {
   );
 }
 
-export default PantryPage
+export default PantryPage;

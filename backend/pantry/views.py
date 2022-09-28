@@ -14,7 +14,7 @@ from .serializers import PantrySerializer
 # Combined PUT and DELETE 
 
 @api_view(['GET', 'POST'])
-@permission_classes([AllowAny,IsAuthenticated])
+@permission_classes([AllowAny])
 def pantry_items(request):
     
     if request.method == 'GET':

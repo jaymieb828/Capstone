@@ -24,10 +24,10 @@ function App() {
         <Route path="/" element={
             <PrivateRoute>
               <HomePage />
-              <AboutPage/>
-              <PantryPage/>
+              {/* <AboutPage/> */}
+              {/* <PantryPage/>
               <ShoppingListPage/>
-              <RecipesPage/>
+              <RecipesPage/> */}
 
 
             </PrivateRoute>
@@ -35,7 +35,7 @@ function App() {
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/pantry" element={<PantryPage/>} />
+        {/* <Route path="/pantry" element={<PantryPage/>} /> */}
       </Routes>
       <Footer />
     </div>

@@ -8,7 +8,7 @@ import useAuth from "../../hooks/useAuth";
 const HomePage = () => {
 
   const [items, setItems] = useState([]);
-  const [user, token] = useAuth();
+  const [ token] = useAuth();
   
   useEffect(() => {
     getAllItems();
@@ -16,89 +16,37 @@ const HomePage = () => {
 
 
 
-  async function getAllItems(){
-    let response = await axios.get(`http://127.0.0.1:8000/api/pantry/`,{
+async function getAllItems(){
+  let response = await axios.get(`http://127.0.0.1:8000/api/pantry/`,{
     headers: {
-      Authorization: 'Bearer ' + token
+      Authorization: 'Bearer' + token
     }
   });
-    setItems(response.data)  
-  }
+   setItems(response.data)
+}
   
 
-  async function createItem(newItem){
-    let response = await axios.post('http://127.0.0.1:8000/api/pantry/', newItem);
-    if(response.status === 201){
-      await getAllItems();
-    }
-  } 
+// async function createItem(newItem){
+//   let response = await axios.post('http://127.0.0.1:8000/api/pantry/', newItem,{ 
+//     headers: {
+//     Authorization: 'Bearer' + token
+//       }
+//   });
+  
+//   if(response.status===201){
+//     await getAllItems();
+//     };
 
-  return (
+  
+  
+return (
     <div className='page-container'>
       <div><DisplayItems displayItems = {items}/></div> 
-      <div className='content-wrap'><CreateItem addNewItem={createItem}/></div>
+      {/* <div className='content-wrap'><CreateItem addNewItem={createItem}/></div> */}
       
     </div>
-  );
-}
+    );
+  };
 
-
-
-
-
-// import React from "react";
-// import { useEffect, useState } from "react";
-// import useAuth from "../../hooks/useAuth";
-// import DisplayItems from "../../components/DisplayItems/DisplayItems";
-// import AddItem from "../../components/CreateItem/CreateItem";
-// import axios from "axios";
-
-
-// const HomePage = () => {
-//   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
-//   // The "token" value is the JWT token that you will send in the header of any request requiring authentication
-//   //TODO: Add an AddCars Page to add a car for a logged in user's garage
-//   const [user, token] = useAuth();
-//   const [items, setAllItems] = useState([]);
-
-//   useEffect(() => {
-//     getAllItems();
-//     addItem();
-//   }, [])
-
-  // async function getAllItems(){
-  //   let response = await axios.get(`http://127.0.0.1:8000/api/pantry/`,{
-  //   headers: {
-  //     Authorization: 'Bearer ' + token
-  //   }
-  // });
-  //   setAllItems(response.data)  
-  // }
-
-//   async function addItem(){
-//     let response = await axios.post(`http://127.0.0.1:8000/api/pantry/`,{
-//     headers: {
-//       Authorization: 'Bearer ' + token
-//     }
-//     }); 
-//       if(response.status = 201){
-//         await getAllItems();
-//       }
-//     }
- 
-  
-
-//   return (
-//     <div className='page-container'>
-//       <div><DisplayItems displayItems = {items}/></div>
-//       <div className = 'content=wrap'><AddItem createItem = {addItem}/></div>
-
-      
-//     </div>
-//   );
-// }
-  
 
 export default HomePage;
-
-
