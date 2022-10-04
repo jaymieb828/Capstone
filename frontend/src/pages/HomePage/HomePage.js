@@ -42,7 +42,7 @@ async function getAllItems(){
 return (
     <div className='page-container'>
       <div><DisplayItems displayItems = {items}/></div> 
-      {/* <div className='content-wrap'><CreateItem addNewItem={createItem}/></div> */}
+       {/* <div className='content-wrap'><CreateItem addNewItem={createItem}/></div> */}
       
     </div>
     );

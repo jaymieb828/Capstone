@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'pantry',
     'categories',
     'shoppinglist',
+    'instacart',
+
 ]
 
 MIDDLEWARE = [
