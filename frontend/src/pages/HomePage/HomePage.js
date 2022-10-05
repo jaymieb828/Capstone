@@ -9,9 +9,11 @@ const HomePage = () => {
 
   const [items, setItems] = useState([]);
   const [ token] = useAuth();
+  const [newItem, setItem] = useState([]);
   
   useEffect(() => {
     getAllItems();
+    createItem();
   }, [])
 
 
@@ -26,27 +28,28 @@ async function getAllItems(){
 }
   
 
-// async function createItem(newItem){
-//   let response = await axios.post('http://127.0.0.1:8000/api/pantry/', newItem,{ 
-//     headers: {
-//     Authorization: 'Bearer' + token
-//       }
-//   });
+async function createItem(newItem){
+  let response = await axios.post('http://127.0.0.1:8000/api/pantry/', newItem,{ 
+    headers: {
+    Authorization: 'Bearer' + token
+      }
+  });
   
-//   if(response.status===201){
-//     await getAllItems();
-//     };
+  if(response.status===201){
+    await getAllItems();
+    };
 
   
   
 return (
     <div className='page-container'>
       <div><DisplayItems displayItems = {items}/></div> 
-       {/* <div className='content-wrap'><CreateItem addNewItem={createItem}/></div> */}
+       <div className='content-wrap'><CreateItem addNewItem={createItem}/></div>
       
     </div>
     );
   };
+}
 
 
 export default HomePage;
