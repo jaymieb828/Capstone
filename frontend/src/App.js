@@ -25,8 +25,8 @@ function App() {
             <PrivateRoute>
               <HomePage />
               {/* <AboutPage/> */}
-              {/* <PantryPage/>
-              <ShoppingListPage/>
+              {/* <PantryPage/> */}
+              {/* <ShoppingListPage/>
               <RecipesPage/> */}
 
 
@@ -35,7 +35,7 @@ function App() {
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        {/* <Route path="/pantry" element={<PantryPage/>} /> */}
+        <Route path="/pantry" element={<PantryPage/>} />
       </Routes>
       <Footer />
     </div>
