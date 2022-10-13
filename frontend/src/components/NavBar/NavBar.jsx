@@ -17,12 +17,12 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="about">
-          <Link to= '/' style = {{ textDecoration: 'none', color: 'white'}}>
+          <Link to= '/about' style = {{ textDecoration: 'none', color: 'white'}}>
             <b>About</b>
           </Link>
         </li>
         <li className="pantry">
-          <Link to= '/' style = {{ textDecoration: 'none', color: 'white'}}>
+          <Link to= '/pantry' style = {{ textDecoration: 'none', color: 'white'}}>
             <b>Pantry</b>
           </Link>
         </li>

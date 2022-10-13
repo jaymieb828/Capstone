@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import PantryPage from "./pages/PantryPage/Pantry";
+import AboutPage from "./pages/AboutPage/About";
 
 
 // Component Imports
@@ -35,7 +36,8 @@ function App() {
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/pantry" element={<PantryPage/>} />
+        <Route path="/pantry" element={<PantryPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
       <Footer />
     </div>

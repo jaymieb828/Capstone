@@ -16,6 +16,7 @@ const HomePage = () => {
 
   useEffect(() => {
     getAllItems();
+    // addNewItem();
     
   }, [])
 
@@ -28,21 +29,21 @@ const HomePage = () => {
     setItems(response.data)  
   }
 
-  async function addNewItem(newItem){
-    let response = await axios.post(`http://127.0.0.1:8000/api/pantry/`,{
-    headers: {
-      Authorization: 'Bearer ' + token
-    }
-  }); 
-  if(response.status === 200){
-    await getAllItems();
-  }
-  }
+  // async function addNewItem(newItem){
+  //   let response = await axios.post(`http://127.0.0.1:8000/api/pantry/`,{
+  //   headers: {
+  //     Authorization: 'Bearer ' + token
+  //   }
+  // }); 
+  // if(response.status === 200){
+  //   await getAllItems();
+  // }
+  // }
 
   return (
     <div className='page-container'>
       <div><DisplayItems displayItems = {items}/></div>
-      <div className='content-wrap'><CreateItem addNewItem = {addNewItem}/></div>
+      {/* <div className='content-wrap'><CreateItem addNewItem = {addNewItem}/></div> */}
 
       
     </div>
