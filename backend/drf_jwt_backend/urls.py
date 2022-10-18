@@ -15,13 +15,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from rest_framework.authtoken.views import obtain_auth_token
+ 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+from rest_framework.authtoken import views
 urlpatterns = [
+    
+    path('api/token/', TokenObtainPairView.as_view(),name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+     
+    path('api/login/',obtain_auth_token),
+    # path('api/auth/token/obtain/', TokenObtainPairView.as_view(),name='token_obtain_pair'),
+    # path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
+    path('rest-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/auth/', include('authentication.urls')),
     path('api/cars/', include('cars.urls')),
     path('api/pantry/', include('pantry.urls')),
     path('api/shoppinglist/', include('shoppinglist.urls')),
+    path('api/kroger/', include('kroger_api.urls')),
     
     
 ]

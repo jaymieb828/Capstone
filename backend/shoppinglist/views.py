@@ -114,10 +114,10 @@ class AddtoCartView(views.APIView):
                 new_cart.total +=product_obj.selling_price
                 new_cart.save()
 
-            response_mesage = {'error':False,'message':"Product add to card successfully","productid":product_id}
+            response_mesage = {'error':False,'message':"Product added to cart successfully","productid":product_id}
         
         except:
-            response_mesage = {'error':True,'message':"Product Not add!Somthing is Wromg"}
+            response_mesage = {'error':True,'message':"Product Not added! Something is Wromg"}
 
         return Response(response_mesage)
 
@@ -158,24 +158,24 @@ class EditCartProduct(views.APIView):
 
 
 
-class Delatecartproduct(views.APIView):
+class Deletecartproduct(views.APIView):
     permission_classes=[IsAuthenticated, ]
     authentication_classes=[TokenAuthentication, ]
     def post(self,request):
         cp_obj = CartProduct.objects.get(id=request.data['id'])
         cp_obj.delete()        
-        return Response({"message":"CartProduct Delated","product":request.data['id']})
+        return Response({"message":"Cart Product Deleted","product":request.data['id']})
 
 
 
-class Delatefullcart(views.APIView):
+class Deletefullcart(views.APIView):
     permission_classes=[IsAuthenticated, ]
     authentication_classes=[TokenAuthentication, ]
     def post(self,request):
         try:
             card_obj = Cart.objects.get(id=request.data['id'])
             card_obj.delete()
-            responsemessage = {"message":"Cart Delated"}
+            responsemessage = {"message":"Cart Deleted"}
         except:
-            responsemessage = {"message":"Somthing wright"}
+            responsemessage = {"message":"Something wrong"}
         return Response(responsemessage)

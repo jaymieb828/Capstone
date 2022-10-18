@@ -1,14 +1,19 @@
-// General Imports
 import { Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
+import React from "react";
 // Pages Imports
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import PantryPage from "./pages/PantryPage/Pantry";
-import AboutPage from "./pages/AboutPage/About";
+import CreateItem from "./components/CreateItem/CreateItem";
+import CartPage from "./pages/CartPage";
 
+ 
+
+import './index.css';
+ 
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -36,8 +41,11 @@ function App() {
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/pantry" element={<PantryPage />} />
-        <Route path="/about" element={<AboutPage />} />
+        <Route path="/pantry" element={<PantryPage/>} />
+        <Route path="/create-item" element={<CreateItem/>} />
+        <Route path="/shopping-list" element={<CartPage/>} />
+
+
       </Routes>
       <Footer />
     </div>
@@ -45,3 +53,17 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+

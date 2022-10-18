@@ -17,7 +17,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="about">
-          <Link to= '/about' style = {{ textDecoration: 'none', color: 'white'}}>
+          <Link to= '/' style = {{ textDecoration: 'none', color: 'white'}}>
             <b>About</b>
           </Link>
         </li>
@@ -27,7 +27,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="shopping-list">
-          <Link to= '/' style = {{ textDecoration: 'none', color: 'white'}}>
+          <Link to= '/shopping-list' style = {{ textDecoration: 'none', color: 'white'}}>
             <b>Shopping List</b>
           </Link>
         </li>

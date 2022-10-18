@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from "react-router-dom";
+import axios from 'axios';
+
+import useAuth from "../../hooks/useAuth";
+
+import Api from './Api';
+
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "XCSRF-TOKEN";
 
 const CreateItem = (props) => {
 
@@ -9,37 +16,91 @@ const CreateItem = (props) => {
     const[itemCategory, setCategory] = useState('');
     const[itemAddToList, setAddToList] = useState('');
     const[itemComments, setComments] = useState('');
+    const [user, token] = useAuth();
 
-    function handleSubmit(event){
-        event.preventDefault();
-        let newItem ={
-            'Item': itemName,
-            'Quantity': itemQuantity,
-            'Category': itemCategory,
-            'Expiration': itemExp,
-            'Add To Shopping List': itemAddToList,
-            'Comments': itemComments
-        }
+    // function handleSubmit(event){
+    //     event.preventDefault();
+    //     let newItem ={
+    //         'Item': itemName,
+    //         'Quantity': itemQuantity,
+    //         'Category': itemCategory,
+    //         'Expiration': itemExp,
+    //         'Add To Shopping List': itemAddToList,
+    //         'Comments': itemComments
+    //     }
 
-        props.addNewItem(newItem);
+    //     props.addNewItem(newItem);
 
-        setName('');
-        setQuantity('');
-        setExp('');
-        setCategory('');
-        setAddToList('');
-        setComments('');
+    //     setName('');
+    //     setQuantity('');
+    //     setExp('');
+    //     setCategory('');
+    //     setAddToList('');
+    //     setComments('');
+
+    
+ 
+
+    // }
+
+    const [input, setInput] = useState({
+
+            item: '',
+            quantity: '',
+            category:  '',
+            expiration: '',
+            add_to_list: '',
+            comments: ''
+
     }
+    )
+
+
+    const handleSubmit = async(e) => {
+        axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+        axios.defaults.xsrfCookieName = "csrftoken";
+        axios.defaults.withCredentials = true;
+        
+        e.preventDefault();
+        await axios.post('http://127.0.0.1:8000/api/pantry/add-item/', 
+        {
+            'item': input.item,
+            'quantity': input.quantity,
+            'category':  input.category,
+            'expiration': input.expiration,
+            'add_to_list': input.add_to_list,
+            'comments': input.comments
+
+    },
+        
+         {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+token
+          },      
+      }
+        
+        )
+
+
+
+    }
+    
+
+    
+ 
+
 
     return(
-        <div>
+        <div align="center" className=''>
         <h2 className='addItem'>Add Item</h2>
-        <div className='create-container'>
-            <form onSubmit = {handleSubmit}>
+        <div  className='create-container'>
+            <form onSubmit={handleSubmit}>
+                 
                 <div className='form-contain'>
                     <div>
                         <label className='form-label' htmlFor = 'Item'>Item Name:</label>
-                        <input type = 'text' id = 'Item' placeholder = 'Item Name' value={itemName} onChange={(event) => setName(event.target.value)}/> 
+                        <input type = 'text' id = 'Item' placeholder = 'Item Name' value={itemName} onChange={(e) => setInput({...input, [e.target.name]:e.target.value})}/> 
                     </div>
                     <div>
                         <label className='form-label' htmlFor = 'Quantity'>Quantity:</label>
@@ -64,7 +125,7 @@ const CreateItem = (props) => {
                 </div> 
                 <div className='button-contain'> 
                     <div>
-                        <button type = 'submit' className='add-button'>Add New Item</button> 
+                        <button type = 'submit' className='add-button btn btn-primary'>Add New Item</button> 
                     </div>
                 </div>  
             </form>
