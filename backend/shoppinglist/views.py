@@ -16,6 +16,8 @@ from pantry.models import Pantry
 from rest_framework.authentication import TokenAuthentication
  
 
+# Create your views here.
+# Combined PUT and DELETE 
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
@@ -114,10 +116,10 @@ class AddtoCartView(views.APIView):
                 new_cart.total +=product_obj.selling_price
                 new_cart.save()
 
-            response_mesage = {'error':False,'message':"Product added to cart successfully","productid":product_id}
+            response_mesage = {'error':False,'message':"Product add to card successfully","productid":product_id}
         
         except:
-            response_mesage = {'error':True,'message':"Product Not added! Something is Wromg"}
+            response_mesage = {'error':True,'message':"Product Not add!Somthing is Wromg"}
 
         return Response(response_mesage)
 
@@ -164,7 +166,7 @@ class Deletecartproduct(views.APIView):
     def post(self,request):
         cp_obj = CartProduct.objects.get(id=request.data['id'])
         cp_obj.delete()        
-        return Response({"message":"Cart Product Deleted","product":request.data['id']})
+        return Response({"message":"CartProduct Delated","product":request.data['id']})
 
 
 
@@ -175,7 +177,7 @@ class Deletefullcart(views.APIView):
         try:
             card_obj = Cart.objects.get(id=request.data['id'])
             card_obj.delete()
-            responsemessage = {"message":"Cart Deleted"}
+            responsemessage = {"message":"Cart Delated"}
         except:
-            responsemessage = {"message":"Something wrong"}
+            responsemessage = {"message":"Somthing wright"}
         return Response(responsemessage)
