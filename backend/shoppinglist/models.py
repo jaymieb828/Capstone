@@ -1,6 +1,5 @@
 
 
-
 # Create your models here.
 from django.db import models
 from authentication.models import User
@@ -11,7 +10,8 @@ from pantry.models import Pantry
 class ShoppingList(models.Model):
     
     item = models.ForeignKey(Pantry,on_delete=models.CASCADE, null=True)
-    quantity = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=1)
+    total = models.PositiveIntegerField(default=0, null=True)
     
      
      

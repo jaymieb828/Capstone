@@ -5,5 +5,5 @@ from .models import ShoppingList
 class ShoppingListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingList
-        fields = ['id', 'item', 'quantity']
+        fields = ['id', 'item','quantity','total']
     

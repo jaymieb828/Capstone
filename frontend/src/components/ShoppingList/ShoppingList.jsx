@@ -1,25 +1,15 @@
-import React, { useState } from 'react';
-import Axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
  
-import { Link, useNavigate } from 'react-router-dom'
+// import { Link, useNavigate } from 'react-router-dom'
  
 import {Table} from 'reactstrap';
-import NewItemModal from "./NewItemModal";
-
-import ConfirmRemovalModal from "./ConfirmRemovalModal";
-import useAuth from "../../hooks/useAuth";
-import axios from 'axios';
-import CreateItem from '../CreateItem/CreateItem';
-import AddItem from '../CreateItem/AddItem';
-import { baseUrl } from '../../shared';
+ 
+import { Link, useNavigate } from 'react-router-dom'
 import AddtoList from '../CreateItem/AddtoList';
 
-
-
-const DisplayItems = (props) => {
-    const [show, setShow] = useState(false);
-    const [lshow, lsetShow] = useState(false);
-
+const ShoppingList = (props) => {
+   
 
 
 function getCookie(name) {
@@ -37,10 +27,18 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+
+
+
+
+
 const csrftoken = getCookie('csrftoken');
 
 
 
+const navigate = useNavigate();
+const [show, setShow] = useState(false);
 
 function toggleShow() {
     setShow(!show);
@@ -48,25 +46,60 @@ function toggleShow() {
 
 
 
-function listtoggleShow() {
-    lsetShow(!lshow);
-}
 
-    const [user, token] = useAuth();
+const[searchTerm, setSearchTerm] = useState('');
 
-     
-    const [dispatch] = useState();
-    const navigate = useNavigate();
+const[quantity, tquantity] = useState()
 
-    const addtocart = async (id) => {
-    axios.post('http://127.0.0.1:8000/api/shoppinglist/addtocart/'
+
+
+
+
+const[item_name, setName] = useState()
+
+
+
+
+ const updatecartproduct = async (id, quantity) => {
+        axios.post('http://127.0.0.1:8000/api/shoppinglist/updatecartproduct/'
+        ,{ "id": id, "quantity":quantity }, 
+        
+        {
+          headers: {
+              'Content-Type': 'application/json',
+               
+              Authorization: 'token ' + localStorage.getItem('access'),
+              
+              'X-CSRFToken': csrftoken
+          },      
+      })      
+      .then((response) => {
+        console.log('response',response.data)
+        navigate('/shopping-list')
+
+      })
+      console.log(localStorage.getItem('access'))
+      .catch((error) => {
+        alert('error',error.response)
+        console.log('----Errors---------',error)
+
+
+      })
+
+   
+ 
+ }
+ 
+
+const delatefullcard = async (id) => {
+        axios.post('http://127.0.0.1:8000/api/shoppinglist/delatefullcart/'
         ,{ "id": id }, 
         
         {
           headers: {
               'Content-Type': 'application/json',
                
-              Authorization: 'Token ' + localStorage.getItem('token'),
+              Authorization: 'token ' + localStorage.getItem('access'),
               
               'X-CSRFToken': csrftoken
           },      
@@ -74,7 +107,9 @@ function listtoggleShow() {
       .then((response) => {
         console.log('response',response.data)
         
+        navigate('/shopping-list')
       })
+
       console.log(localStorage.getItem('access'))
       .catch((error) => {
         alert('error',error.response)
@@ -88,95 +123,19 @@ function listtoggleShow() {
 
 }
  
-
-
-
-    const[searchTerm, setSearchTerm] = useState('');
-   function newItem(  item,
-            quantity,
-            price,
-            add_to_list,
-            expiration,
-            comments,
-            category,
-            
-              ) {
-
-        const data = { item: item, quantity: quantity,price:price,add_to_list: add_to_list, expiration:expiration, comments:comments, category:category};
-        const url = baseUrl + 'api/pantry/add-item/';
-
-
-         
-
-        axios.post(url
-        ,JSON.stringify(data),
-
-        
-        {
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+token,
-              'X-CSRFToken': csrftoken
-              
-          },      
-      })      
-      .then((response) => {
-        console.log('response',response.data)
-        navigate('/pantry')
-
-      })
-      .catch((error) => {
-        alert('error',error.response)
-        console.log('----Errors---------',error)
-
-
-      })
- 
-              }
-
-
-
-    function listItem(list_item,list_quantity
-            
-              ) {
-
-        const listdata = { item: list_item, quantity: list_quantity };
-        console.log(listdata);
-        const url = baseUrl + 'api/shoppinglist/';
-
-
-        axios.post(url
-        ,JSON.stringify(listdata),
-
-        
-        {
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+token,
-              'X-CSRFToken': csrftoken
-              
-          },      
-      })      
-      .then((response) => {
-         
-        navigate('/pantry')
-
-      })
-      .catch((error) => {
-        alert('error',error.response)
-        console.log('----Errors---------',error)
-
-
-      })
-              
-              
-   }
-
-
- 
-
- 
      
+
+ 
+
+
+ 
+
+
+
+
+
+
+
     return (
         
         <div align="center" className = 'display-container'>
@@ -187,36 +146,30 @@ function listtoggleShow() {
             </div>
         <div className = 'table-title'>
             <div className = 'library-contain'>
-                <h2 className = 'library-title'>Pantry List</h2>
+                <h2 className = 'library-title'>Shopping List</h2>
             </div>
        
         </div>
 
        
-   <AddItem 
-                newItem={newItem}
-                show={show}
-                toggleShow={toggleShow}
-                />
+    
 
-        <Table striped bordered hover variant="dark">
+         <Table striped bordered hover variant="dark">
         <thead align="center">
           
             <tr className = 'header-row'>
-                <th>Item</th>
+                <th>Item ID</th>
                 <th>Quantity</th>
-                <th>Category</th>
-                <th>Price</th>
+                
+                <th>Total</th>
 
-                <th>Expiration</th>
-                <th>Add to List</th>
-                <th>Comments</th>
+                
                 <th>Action</th>
 
             </tr>
         </thead>
         <tbody align="center">
-            {props.displayItems.filter((item) => {
+            {props.cartItems.filter((item) => {
                 if (searchTerm === ""){
                     return item;
                 }
@@ -228,13 +181,11 @@ function listtoggleShow() {
             return (
                 <tr key= {index} className = 'display-rows'>
                     <td>{item.item}</td> 
-                    <td>{item.quantity}</td>
-                    <td>{item.category_id}</td> 
-                    <td>{item.price}</td> 
+                    <td> {item.quantity}</td>
+                    
+                    <td>{item.total}</td> 
 
-                    <td>{item.expiration}</td> 
-                    <td>{item.add_to_list}</td> 
-                    <td>{item.comments}</td>
+                
                     {/* <td align="center">
                   <NewItemModal
                     create={false}
@@ -248,26 +199,44 @@ function listtoggleShow() {
                   />
                     </td> */}
 
-                    <td>   
+                       
                         {/* <AddtoList 
                         listItem={listItem}
                         lshow={lshow}
                         pk={item.id}
                         listtoggleShow={listtoggleShow}
                     /> */}
-                <Link onClick={() => addtocart(item.id)} class="block m-2 bg-purple-600 hover:bg-blue-700 text-white font-bold py-2 rounded ">Add to List</Link>
-
-                    </td>
+                <td>
+                                            {/* <button onClick={() => editcartproduct(item.id)} className="btn btn-info">-</button> */}
+                                             <AddtoList 
+                                               newItem={updatecartproduct}
+                                                show={show}
+                                                
+                                                toggleShow={toggleShow}
+                                            /> 
+                                            <button onClick={() => delatefullcard(item.id)} className="btn btn-danger mx-2">Delete</button>
+                                        </td>
+                   
 
                     
                 </tr>
             )
             })}
         </tbody>
+ <tfoot>
+                            <tr>
+                                <th colSpan="4" className="text-right" >Total</th>
+                                <th>Comming soon</th>
+                                <th>
+                                    {/* <Link to="#" className="btn btn-success" >OrderNow</Link> */}
+                                </th>
+                            </tr>
+                        </tfoot>
+
         </Table>
     </div>
     );
      
 }
 
-export default DisplayItems;
+export default ShoppingList;

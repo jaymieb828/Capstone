@@ -6,31 +6,31 @@ import Modal from 'react-bootstrap/Modal';
 
 export default function AddtoList(props) {
 
-    const [list_item, setListItem] = useState(props.pk);
+    const [list_item, setListItem] = useState(props.id);
     const [list_quantity, setListQuantity] = useState(0);
 
     
 
-     const [lshow, lsetShow] = useState(props.lshow);
+    const [show, setShow] = useState(props.show);
 
-    const listhandleClose = () => lsetShow(false);
-    const handleShow = () => lsetShow(true);
-  
+    const handleClose = () => setShow(false);
+
+    
 
     return (
         <>
             <Button
-                onClick={props.listtoggleShow}
-                className="block m-2 bg-purple-600 hover:bg-blue-700 text-white font-bold py-2 rounded "
+                onClick={props.toggleShow}
+                className="block m-2 bg-purple-600 hover:bg-blue-700 text-white py-2 rounded "
             >
-                Add to ist
+                Update
             </Button>
 
             <Modal
-                show={props.lshow}
-                onHide={listhandleClose}
-                backdrop="static"
-                keyboard={false}
+                show={props.show}
+                onHide={handleClose}
+                 
+                
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Add New Item</Modal.Title>
@@ -39,7 +39,7 @@ export default function AddtoList(props) {
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            setListItem(props.pk);
+                            setListItem(props.id);
 
                             setListQuantity();
                             
@@ -93,7 +93,7 @@ export default function AddtoList(props) {
                 <Modal.Footer>
                     <button
                         className="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded"
-                        onClick={props.listtoggleShow}
+                        onClick={props.toggleShow}
                     >
                         Close
                     </button>

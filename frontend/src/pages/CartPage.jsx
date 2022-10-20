@@ -3,7 +3,7 @@ import axios from 'axios';
  
 import useAuth from '../hooks/useAuth';
 
-import Cart from '../components/Cart/Cart';
+ 
 
 import ShoppingList from '../components/ShoppingList/ShoppingList';
 
@@ -19,7 +19,7 @@ const CartPage = () => {
 
 
   async function getAllItems(){
-    let response = await axios.get(`http://127.0.0.1:8000/api/shoppinglist/`,{
+    let response = await axios.get('http://127.0.0.1:8000/api/shoppinglist/',{
     headers: {
       Authorization: 'Bearer ' + token
     }
