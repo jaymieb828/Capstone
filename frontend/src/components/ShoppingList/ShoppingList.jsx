@@ -8,6 +8,8 @@ import {Table} from 'reactstrap';
 import { Link, useNavigate } from 'react-router-dom'
 import AddtoList from '../CreateItem/AddtoList';
 
+import useAuth from '../../hooks/useAuth';
+
 const ShoppingList = (props) => {
    
 
@@ -34,7 +36,7 @@ function getCookie(name) {
 
 
 const csrftoken = getCookie('csrftoken');
-
+const [user, token] = useAuth();
 
 
 const navigate = useNavigate();
@@ -66,10 +68,10 @@ const[item_name, setName] = useState()
         
         {
           headers: {
-              'Content-Type': 'application/json',
-               
-              Authorization: 'token ' + localStorage.getItem('access'),
-              
+            "Content-Type":"application/json",
+            Authorization: "Bearer " + token,
+            
+                    
               'X-CSRFToken': csrftoken
           },      
       })      
@@ -97,17 +99,16 @@ const delatefullcard = async (id) => {
         
         {
           headers: {
-              'Content-Type': 'application/json',
-               
-              Authorization: 'token ' + localStorage.getItem('access'),
-              
+            "Content-Type":"application/json",
+            Authorization: "Bearer " + token,
+            
               'X-CSRFToken': csrftoken
           },      
       })      
       .then((response) => {
         console.log('response',response.data)
         
-        navigate('/shopping-list')
+        
       })
 
       console.log(localStorage.getItem('access'))
@@ -119,14 +120,75 @@ const delatefullcard = async (id) => {
       })
 
    
- 
+ navigate('/shopping-list')
 
 }
  
      
 
- 
 
+const delateall = async (id) => {
+        axios.post('http://127.0.0.1:8000/api/shoppinglist/delate-full/'
+        ,{ "id": id }, 
+        
+        {
+          headers: {
+            "Content-Type":"application/json",
+            Authorization: "Bearer " + token,
+            
+              'X-CSRFToken': csrftoken
+          },      
+      })      
+      .then((response) => {
+        console.log('response',response.data)
+        
+        
+      })
+
+      console.log(localStorage.getItem('access'))
+      .catch((error) => {
+        alert('error',error.response)
+        console.log('----Errors---------',error)
+
+
+      })
+
+   
+ navigate('/shopping-list')
+
+}
+ 
+const checkout = async (id) => {
+        axios.post('http://127.0.0.1:8000/api/shoppinglist/checkout/'
+        ,{ "id": id }, 
+        
+        {
+          headers: {
+            "Content-Type":"application/json",
+            Authorization: "Bearer " + token,
+            
+              'X-CSRFToken': csrftoken
+          },      
+      })      
+      .then((response) => {
+        console.log('response',response.data)
+         navigate('/pantry')
+        
+      })
+
+      console.log(localStorage.getItem('access'))
+      .catch((error) => {
+        alert('error',error.response)
+        console.log('----Errors---------',error)
+
+
+      })
+
+   
+
+
+}
+ 
 
  
 
@@ -226,7 +288,7 @@ const delatefullcard = async (id) => {
  <tfoot>
                             <tr>
                                 <th colSpan="4" className="text-right" >Total</th>
-                                <th>Comming soon</th>
+                                <th>{props.cart.total}</th>
                                 <th>
                                     {/* <Link to="#" className="btn btn-success" >OrderNow</Link> */}
                                 </th>
@@ -234,6 +296,13 @@ const delatefullcard = async (id) => {
                         </tfoot>
 
         </Table>
+
+
+        <br></br> 
+            <button onClick={() => delateall(props.cart.id)} className="btn btn-danger mx-2">Delete Cart</button>
+
+            <button onClick={() => checkout(props.cart.id)} className="btn btn-primary mx-2">Checkout</button>
+
     </div>
     );
      

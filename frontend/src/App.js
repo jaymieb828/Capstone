@@ -30,12 +30,6 @@ function App() {
         <Route path="/" element={
             <PrivateRoute>
               <HomePage />
-              {/* <AboutPage/> */}
-              {/* <PantryPage/> */}
-              {/* <ShoppingListPage/>
-              <RecipesPage/> */}
-
-
             </PrivateRoute>
           }
         />

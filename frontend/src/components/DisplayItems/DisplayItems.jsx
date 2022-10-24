@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
  
 import { Link, useNavigate } from 'react-router-dom'
@@ -19,8 +19,8 @@ import AddtoList from '../CreateItem/AddtoList';
 const DisplayItems = (props) => {
     const [show, setShow] = useState(false);
     const [lshow, lsetShow] = useState(false);
-
-
+const [user, token] = useAuth();
+  
 
 function getCookie(name) {
     let cookieValue = null;
@@ -52,7 +52,17 @@ function listtoggleShow() {
     lsetShow(!lshow);
 }
 
-    const [user, token] = useAuth();
+
+const [cats, setCats] = useState()
+ 
+
+
+
+
+// useEffect(() => {
+//     getCats();
+//   }, [])
+    
 
      
     const [dispatch] = useState();
@@ -63,13 +73,15 @@ function listtoggleShow() {
         ,{ "id": id }, 
         
         {
-          headers: {
-              'Content-Type': 'application/json',
-               
-              Authorization: 'Token ' + localStorage.getItem('token'),
+          
               
-              'X-CSRFToken': csrftoken
-          },      
+     headers: {
+      "Content-Type":"application/json",
+      Authorization: "Bearer " + token
+    },
+              
+               
+             
       })      
       .then((response) => {
         console.log('response',response.data)
@@ -85,6 +97,41 @@ function listtoggleShow() {
 
    
  
+
+}
+ 
+ 
+
+
+ const delatefullPantry = async (id) => {
+        axios.post('http://127.0.0.1:8000/api/pantry/delete/'
+        ,{ "id": id }, 
+        
+        {
+          headers: {
+      "Content-Type":"application/json",
+      Authorization: "Bearer " + token
+    ,
+              
+              'X-CSRFToken': csrftoken
+          },      
+      })      
+      .then((response) => {
+        console.log('response',response.data)
+        
+        
+      })
+
+      console.log(localStorage.getItem('access'))
+      .catch((error) => {
+        alert('error',error.response)
+        console.log('----Errors---------',error)
+
+
+      })
+
+   
+ navigate('/shopping-list')
 
 }
  
@@ -114,8 +161,9 @@ function listtoggleShow() {
         
         {
           headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+token,
+      "Content-Type":"application/json",
+      Authorization: "Bearer " + token,
+    
               'X-CSRFToken': csrftoken
               
           },      
@@ -151,8 +199,9 @@ function listtoggleShow() {
         
         {
           headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+token,
+               
+      "Content-Type":"application/json",
+      Authorization: "Bearer " + token,
               'X-CSRFToken': csrftoken
               
           },      
@@ -226,10 +275,12 @@ function listtoggleShow() {
             })
             .map((item, index) => { 
             return (
+                
                 <tr key= {index} className = 'display-rows'>
+                    
                     <td>{item.item}</td> 
                     <td>{item.quantity}</td>
-                    <td>{item.category_id}</td> 
+                    <td>{item.categories.type}</td> 
                     <td>{item.price}</td> 
 
                     <td>{item.expiration}</td> 
@@ -256,6 +307,8 @@ function listtoggleShow() {
                         listtoggleShow={listtoggleShow}
                     /> */}
                 <Link onClick={() => addtocart(item.id)} class="block m-2 bg-purple-600 hover:bg-blue-700 text-white font-bold py-2 rounded ">Add to List</Link>
+
+                 <button onClick={() => delatefullPantry(item.id)} className="btn btn-danger mx-2">Delete</button>
 
                     </td>
 

@@ -25,22 +25,10 @@ async function getAllItems(){
    setItems(response.data)
 }
   
-
-// async function createItem(newItem){
-//   let response = await axios.post('http://127.0.0.1:8000/api/pantry/', newItem,{ 
-//     headers: {
-//     Authorization: 'Bearer' + token
-//       }
-//   });
-  
-//   if(response.status===201){
-//     await getAllItems();
-//     };
-
-  
-  
+    
 return (
     <div className='page-container'>
+      
       <div><DisplayItems displayItems = {items}/></div> 
        {/* <div className='content-wrap'><CreateItem addNewItem={createItem}/></div> */}
       

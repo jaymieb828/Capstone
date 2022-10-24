@@ -21,8 +21,12 @@ function setUserObject(user) {
 export const AuthProvider = ({ children }) => {
   const BASE_URL = "http://127.0.0.1:8000/api/auth";
   const userToken = JSON.parse(localStorage.getItem("token"));
+ 
+
   const decodedUser = userToken ? jwtDecode(userToken) : null;
   const [token, setToken] = useState(userToken);
+ 
+
   const [user, setUser] = useState(setUserObject(decodedUser));
   const [isServerError, setIsServerError] = useState(false);
   const navigate = useNavigate();
@@ -54,7 +58,13 @@ export const AuthProvider = ({ children }) => {
       let response = await axios.post(`${BASE_URL}/login/`, loginData);
       if (response.status === 200) {
         localStorage.setItem("token", JSON.stringify(response.data.access));
+        // localStorage.setItem("refresh", JSON.stringify(response.json().refresh));
+
         setToken(JSON.parse(localStorage.getItem("token")));
+        // setRToken(JSON.parse(localStorage.getItem("refresh")));
+
+        // console.log(token, refresh)
+
         let loggedInUser = jwtDecode(response.data.access);
         setUser(setUserObject(loggedInUser));
         setIsServerError(false);
@@ -69,6 +79,34 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
+
+// let updateToken = async ()=> {
+
+//         let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+//             method:'POST',
+//             headers:{
+//                 'Content-Type':'application/json'
+//             },
+//             body:JSON.stringify({'refresh':refresh})
+//         })
+
+//         let data = await response.json()
+        
+//         if (response.status === 200){
+//             setToken(data.access)
+//             setRToken(data.refresh)
+
+//             setUser(jwtDecode(data.access))
+//             localStorage.setItem('authTokens', JSON.stringify(data))
+//         }else{
+//             logoutUser()
+//         }
+
+     
+//     }
+
+
   const logoutUser = () => {
     if (user) {
       localStorage.removeItem("token");
@@ -80,7 +118,8 @@ export const AuthProvider = ({ children }) => {
 
   const contextData = {
     user,
-    token,
+    // refresh:refresh,
+    token:token,
     loginUser,
     logoutUser,
     registerUser,

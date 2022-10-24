@@ -1,5 +1,4 @@
 """drf_jwt_backend URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
 Examples:
@@ -22,14 +21,16 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from rest_framework.authtoken import views
+
+from authentication.views import *
+
 urlpatterns = [
     
-    path('api/token/', TokenObtainPairView.as_view(),name='token_obtain_pair'),
+    path('api/token/', MyTokenObtainPairView.as_view(),name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
      
     path('api/login/',obtain_auth_token),
-    # path('api/auth/token/obtain/', TokenObtainPairView.as_view(),name='token_obtain_pair'),
-    # path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+ 
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('rest-auth/', include('rest_framework.urls', namespace='rest_framework')),
