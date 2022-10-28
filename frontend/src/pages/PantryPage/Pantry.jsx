@@ -17,14 +17,31 @@ const PantryPage = () => {
 
 
   async function getAllItems(){
-    let response = await axios.get(`http://127.0.0.1:8000/api/pantry/`,{
+    let response = await axios.get(`http://127.0.0.1:8000/api/pantry/`,
+    {
     headers: {
-      Authorization: 'Bearer ' + token
+      "Content-Type":"application/json",
+      Authorization: "Bearer " + token
     }
+
+  });
+
+    setItems(response.data)  
+  }
+
+
+
+  async function getAllCat(){
+    let response = await axios.get(`http://127.0.0.1:8000/api/pantry/`,
+    {
+    headers: {
+      "Content-Type":"application/json",
+      Authorization: "Bearer " + token
+    }
+
   });
     setItems(response.data)  
   }
-  
 
 
   return (

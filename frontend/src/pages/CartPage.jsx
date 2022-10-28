@@ -10,6 +10,10 @@ import ShoppingList from '../components/ShoppingList/ShoppingList';
 const CartPage = () => {
 
   const [items, setItems] = useState([]);
+  const [cart, setCart] = useState([]);
+
+  
+
   const [user, token] = useAuth();
   
   useEffect(() => {
@@ -17,21 +21,56 @@ const CartPage = () => {
   }, [])
 
 
+ useEffect(() => {
+    getCart();
+  }, [])
 
   async function getAllItems(){
     let response = await axios.get('http://127.0.0.1:8000/api/shoppinglist/',{
     headers: {
-      Authorization: 'Bearer ' + token
+      "Content-Type":"application/json",
+      Authorization: "Bearer " + token
     }
   });
+    if (response.status === 200){
     setItems(response.data)  
+    }
+    else{
+      setItems(null) 
+    }
   }
   
 
 
+  async function getCart(){
+    let response = await axios.get('http://127.0.0.1:8000/api/shoppinglist/cart/',{
+    headers: {
+      "Content-Type":"application/json",
+      Authorization: "Bearer " + token
+    }
+  });
+  if (response.status === 200){
+        setCart(response.data)  
+
+    }
+    else{
+      setCart(null) 
+    }
+    console.log(cart)
+
+  }
+  
+
+ 
+
   return (
     <div className='page-container'>
-      <div><ShoppingList cartItems = {items}/></div> 
+      <div><ShoppingList 
+      cartItems = {items} 
+       
+      cart = {cart}
+      
+      /></div> 
     </div>
   );
 }
