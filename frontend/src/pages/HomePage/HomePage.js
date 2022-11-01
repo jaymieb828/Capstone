@@ -46,7 +46,7 @@ return (
 
       {user && <h4>Hello, {user.username}</h4>}
 
-      <div><DisplayItems displayItems = {items}/></div> 
+      {/* <div><DisplayItems displayItems = {items}/></div>  */}
        {/* <div className='content-wrap'><CreateItem addNewItem={createItem}/></div> */}
       
     </div>

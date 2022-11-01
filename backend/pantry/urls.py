@@ -10,3 +10,5 @@ urlpatterns = [
     
     
 ]
+
+#GET url valid. Testing complete. Need to debug POST and PUT.

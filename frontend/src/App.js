@@ -9,8 +9,9 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import PantryPage from "./pages/PantryPage/Pantry";
 import CreateItem from "./components/CreateItem/CreateItem";
 import CartPage from "./pages/CartPage";
+import AboutPage from "./pages/AboutPage";
 
- 
+
 
 import './index.css';
  
@@ -25,23 +26,29 @@ import PrivateRoute from "./utils/PrivateRoute";
 function App() {
   return (
     <div>
-      <Navbar />
+            <Navbar />
+  
       <Routes>
         <Route path="/" element={
             <PrivateRoute>
               <HomePage />
+            
             </PrivateRoute>
           }
+          exact
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/pantry" element={<PantryPage/>} />
         <Route path="/create-item" element={<CreateItem/>} />
         <Route path="/shopping-list" element={<CartPage/>} />
+        <Route path="/about" element={<AboutPage/>} />
 
 
       </Routes>
       <Footer />
+       
+
     </div>
   );
 }
@@ -57,6 +64,7 @@ export default App;
 
 
  
+
 
 
 

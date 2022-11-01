@@ -1,36 +1,28 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { useState } from 'react'; 
 import Modal from 'react-bootstrap/Modal';
-
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 export default function AddtoList(props) {
 
     const [list_item, setListItem] = useState(props.id);
     const [list_quantity, setListQuantity] = useState(0);
-
-    
-
     const [show, setShow] = useState(props.show);
-
     const handleClose = () => setShow(false);
 
     
 
     return (
         <>
-            <Button
-                onClick={props.toggleShow}
-                className="block m-2 bg-purple-600 hover:bg-blue-700 text-white py-2 rounded "
-            >
-                Update
-            </Button>
+            <IconButton color='primary' onClick={props.toggleShow}> 
+                <EditIcon/>
+            </IconButton>
 
             <Modal
                 show={props.show}
-                onHide={handleClose}
-                 
-                
+                onHide={handleClose}   
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Add New Item</Modal.Title>
@@ -39,13 +31,8 @@ export default function AddtoList(props) {
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            setListItem(props.id);
-
-                            setListQuantity();
-                            
-                            
-                             
-                             
+                            setListItem(props.id); 
+                            setListQuantity(); 
                             console.log(list_item, list_quantity)
                             props.listItem(list_item,
                                         list_quantity,

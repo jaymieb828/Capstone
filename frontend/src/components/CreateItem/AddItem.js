@@ -1,260 +1,287 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import React, { useState, useEffect, useContext } from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
+
+
 
 export default function AddItem(props) {
-    const [item, setItem] = useState('');
-    const [quantity, setQuantity] = useState(0);
-
-    const [expiration, setExpiratin] = useState('');
-    const [add_to_list, setAddtolist] = useState('');
-    const [category, setCategory] = useState('');
-    const [price, setPrice] = useState(0);
 
 
-    const [comments, setComments] = useState('');
+  var categories = [
+    // 'Veg',
+    // 'Dairy',
+    // 'Fruits',
+    // 'Meats',
+    // 'Dry Goods',
+    // 'Spices/oils/sauces',
+  ]
+
+  const [item, setItem] = useState('');
+  const [expiration, setExpiratin] = useState(new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate());
+  const [category, setCategory] = useState('');
+  const [categoryList, setCategoryList] = useState([]);
+  
+
+  const [comments, setComments] = useState('');
+  const [productId, setProductId] = useState('');
+  const [upc, setUpc] = useState('');
+  
+
+  const [price, setPrice] = useState(0);
+  const [show, setShow] = useState(props.show);
+  const [krogerProducts, setkrogerProducts] = useState([]);
+  const [krogerQuery, setkrogerQuery] = useState('');
+  const [loading, setLoading] = useState(false);
 
 
-    const [show, setShow] = useState(props.show);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    return (
-        <>
-            <Button
-                onClick={props.toggleShow}
-                className="block m-2 bg-purple-600 hover:bg-blue-700 text-white font-bold py-2 rounded"
-            >
-                + Add Item
-            </Button>
-
-            <Modal
-                show={props.show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Add New Item</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            setItem('');
-                            setQuantity('');
-                            setPrice('');
-                            setAddtolist('');
-                            setExpiratin('');
-
-                            setComments('');
-                            setCategory('');
+  
 
 
-                             
+  useEffect(() => {
+    console.log(krogerQuery)
+    var requiredProducts = krogerProducts.filter(record => { return record.description.toLowerCase().includes(krogerQuery.toLowerCase()) })
+    console.log("requiredProducts = ", requiredProducts)
 
-                            props.newItem(item,
-                                        quantity,
-                                        price,
-                                        add_to_list,
-                                        expiration,
-                                        comments,
-                                        category
-                                         );
-                        }}
-                        id="editmodal"
-                        className="w-full max-w-sm"
-                    >
-                        <div className="md:flex md:items-center mb-6">
-                            <div className="md:w-1/3">
-                                <label
-                                    className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="item"
-                                >
-                                    Item
-                                </label>
-                            </div>
-                            <div className="md:w-2/3">
-                                <input
-                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                                    id="item"
-                                    placeholder="Item title"
-                                    type="text"
-                                    value={item}
-                                    onChange={(e) => {
-                                        setItem(e.target.value);
-                                    }}
-                                />
-                            </div>
-
-                        </div>
+    setUpc('')
+    setProductId('')
+    // setPrice('')
+    setCategoryList([])
+    setItem('')
+    setCategory('')
 
 
-                         <div className="md:flex md:items-center mb-6">
-                            <div className="md:w-1/3">
-                                <label
-                                    className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="quant"
-                                >
-                                    Quantity
-                                </label>
-                            </div>
-                            <div className="md:w-2/3">
-                                <input
-                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                                    id="quant"
-                                    placeholder="Item quantity"
-                                    type="number"
-                                    value={quantity}
-                                    onChange={(e) => {
-                                        setQuantity(e.target.value);
-                                    }}
-                                />
-                            </div>
-                        </div>
+    var matchedProducts = krogerProducts.filter(record => { return record.description.toLowerCase()==krogerQuery.toLowerCase() })
+    if (matchedProducts.length>0){
+      // Populate other parameters
+      setUpc(matchedProducts[0].upc)
+      setProductId(matchedProducts[0].productId)
+      setItem(krogerQuery)
+      setPrice(parseFloat(matchedProducts[0].items[0].price.regular))
 
-                            <div className="md:flex md:items-center mb-6">
-                            <div className="md:w-1/3">
-                                <label
-                                    className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="price"
-                                >
-                                    Price
-                                </label>
-                            </div>
-                            <div className="md:w-2/3">
-                                <input
-                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                                    id="price"
-                                    placeholder="Item price"
-                                    type="number"
-                                    value={price}
-                                    onChange={(e) => {
-                                        setPrice(e.target.value);
-                                    }}
-                                />
-                            </div>
-                        </div>
+      console.log("-> price = ",matchedProducts[0].items[0].price.regular)
 
-                        <div className="md:flex md:items-center mb-6">
-                            <div className="md:w-1/3">
-                                <label
-                                    className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="industry"
-                                >
-                                    Expiration
-                                </label>
-                            </div>
-                            <div className="md:w-2/3">
-                                <input
-                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                                    id="industry"
-                                    placeholder="Expiration date"
-                                    type="date"
-                                    value={expiration}
-                                    onChange={(e) => {
-                                        setExpiratin(e.target.value);
-                                    }}
-                                />
-                            </div>
-                        </div>
+      setCategoryList(matchedProducts[0].categories)
+      setCategory(matchedProducts[0].categories[0])
+    }
+
+    const delayDebounceFn = setTimeout(() => {
+      if (requiredProducts.length==0 && krogerQuery.length>=3){
+          // Send Axios request here
+          setLoading(true)
+          onKrogerProductQueryChange(krogerQuery) 
+      }
+    }, 1000)
+    return () => clearTimeout(delayDebounceFn)
+  }, [krogerQuery])
 
 
-
-                         <div className="md:flex md:items-center mb-6">
-                            <div className="md:w-1/3">
-                                <label
-                                    className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="add_"
-                                >
-                                    Add to list
-                                </label>
-                            </div>
-                            <div className="md:w-2/3">
-                                <input
-                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                                    id="add_"
-                                    placeholder="Add to list"
-                                    type="text"
-                                    value={add_to_list}
-                                    onChange={(e) => {
-                                        setAddtolist(e.target.value);
-                                    }}
-                                />
-                            </div>
-
-                        </div>
+  const handleClickOpen = () => {
+    setShow(true);
+  };
 
 
+  function handleSubmit() { 
+    if (!item.trim()) {
+      alert("Item name invalid")
+      return
+    }
+    if ((price).toString().trim().length==0) {
+      alert("price invalid")
+      return
+    }
+    if (!expiration.toString().trim()) {
+      alert("expiration invalid")
+      return
+    }
+    if (!comments.trim()) {
+      alert("comments invalid")
+      return
+    }
+    var matchedProducts = krogerProducts.filter(record => { return record.description.toLowerCase()==krogerQuery.toLowerCase() })
+    if (matchedProducts.length==0){
+      alert("Please select Item/Product from suggestions list")
+      return 
+    }
 
-
-                     <div className="md:flex md:items-center mb-6">
-                            <div className="md:w-1/3">
-                                <label
-                                    className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="item"
-                                >
-                                    Comments
-                                </label>
-                            </div>
-                            <div className="md:w-2/3">
-                                <input
-                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                                    id="item"
-                                    placeholder="Comments"
-                                    type="text"
-                                    value={comments}
-                                    onChange={(e) => {
-                                        setComments(e.target.value);
-                                    }}
-                                />
-                            </div>
-
-                        </div>
-
-
-                    <div className="md:flex md:items-center mb-6">
-                            <div className="md:w-1/3">
-                                <label
-                                    className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                                    for="item"
-                                >
-                                    Category
-                                </label>
-                            </div>
-                            <div className="md:w-2/3">
-                                <input
-                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                                    id="item"
-                                    placeholder="Item category"
-                                    type="text"
-                                    value={category}
-                                    onChange={(e) => {
-                                        setCategory(e.target.value);
-                                    }}
-                                />
-                            </div>
-
-                        </div>
-
-                    </form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <button
-                        className="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded"
-                        onClick={props.toggleShow}
-                    >
-                        Close
-                    </button>
-                    <button
-                        className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-                        form="editmodal"
-                    >
-                        Add
-                    </button>
-                </Modal.Footer>
-            </Modal>
-        </>
+ 
+    setItem('');
+    setPrice(''); 
+    setComments('');
+    setCategory('');
+ 
+    props.newItem(
+      productId,upc,item,  price, expiration, comments, category
     );
+
+
+
+  }
+
+  async function onKrogerProductQueryChange(newValue) {
+    console.log("Calling Kroger API")
+    var requiredProducts = krogerProducts.filter(record => { return record.description.toLowerCase().includes(newValue.toLowerCase()) })
+
+
+
+    var data = {
+      "filter.term": newValue,
+      "filter.locationId": "02600845",
+      "filter.product_id": null,
+      "filter.brand": null,
+      "filter.fulfillment": "csp",
+    };
+    var config = {
+      method: 'get',
+      url: `http://127.0.0.1:8000/api/kroger/fetchProducts?filter_term=${newValue}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: data
+    };
+    axios(config)
+      .then(function (response) {
+        setkrogerProducts(response.data.products);
+        console.log(response.data.products);
+        setLoading(false)
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+  const [inputValue, setInputValue] = React.useState('');
+
+  return (
+
+    <Box component="form"  >
+      <Dialog open={props.show} onClose={props.toggleShow}>
+        <DialogTitle>Add New Item</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+          </DialogContentText>
+
+          <Autocomplete 
+            // loading
+            options={krogerProducts}
+            getOptionLabel={(option) => option.description || ""}
+            defaultValue={[krogerProducts[0]] || ""}
+            // onChange={onKrogerProductQueryChange(event, newInputValue)}
+            onInputChange={(event, newValue) => {
+              // setInputValue(newValue)
+              setkrogerQuery(newValue)
+
+              // onKrogerProductQueryChange(event, newValue);
+            }}
+
+            renderInput={params => (
+              <TextField
+                {...params}
+                // variant="standard"
+                label="Seach Item"
+                id='item'
+                placeholder="Favorites"
+                margin="normal"
+                fullWidth
+                onChange={(e) => { setItem(e.target.value); }}
+
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                      <>
+                          {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                          {params.InputProps.endAdornment}
+                      </>
+                  )
+              }}
+              />
+            )}
+          />
+
+
+
+
+          {/* <TextField
+            margin="dense"
+            id="quantity"
+            label="Quantity"
+            type="number"
+            fullWidth
+            required
+            value={quantity}
+            onChange={(e) => { setQuantity(e.target.value); }}
+          /> */}
+          <TextField
+            margin="dense"
+            id="price"
+            label="Price"
+            type="number"
+            required
+            value={price}
+            disabled
+            // onChange={(e) => { setPrice(e.target.value); }}
+            fullWidth
+          />
+          <TextField
+            id="expiration"
+            label="Expiration"
+            type="date"
+            onChange={(e) => { setExpiratin(e.target.value); }}
+            fullWidth
+            defaultValue={expiration} 
+            sx={{ mt: 1 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            type="text"
+            name="commments"
+            autoComplete=""
+            label='Comments'
+            value={comments}
+            onChange={(e) => { setComments(e.target.value); }}
+          />
+          <Select
+            // disabled
+            sx={{ mt: 1 }}
+            labelId="demo-simple-select-label"
+            id="category"
+            fullWidth
+            value={category}
+            label="Category"
+            onChange={(e) => { setCategory(e.target.value); }}
+          >
+            {categoryList.map((val, index) => {
+              return <MenuItem value={val}>{val}</MenuItem>
+            })}
+          </Select>
+
+        </DialogContent>
+        <DialogActions>
+          <Button type="submit" onClick={props.toggleShow}>Cancel</Button>
+          <Button onClick={() => handleSubmit()}>Add New Item</Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  )
+
+
 }
+
+
+

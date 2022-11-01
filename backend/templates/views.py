@@ -80,12 +80,41 @@ def update_item(request, pk):
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def add_new_item(request):
-    data = request.data 
-    serializer = PantrySerializer(data=data)    
+    data = request.data
+    print("enter", data)
 
-    if serializer.is_valid(): 
-        serializer.save()  
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    category = Categories.objects.filter(type=data['category'])
+    if category.exists():
+        category = category.first()
+    else:
+        category = Categories.objects.all().first()
+    data['category'] = category
+    serializer = PantrySerializer(data=data)  
+    print("enter", data)
+
+    if serializer.is_valid():
+        # serializer.save() 
+        new_item = Pantry(
+                item= data['item'],
+                quantity= data['quantity'],
+                expiration= datetime.datetime.strptime(data['expiration'],'%Y-%m-%d').date(),
+                # expiration= '2022-09-19',
+                category= data['category'], 
+                comments= data['comments'],
+                add_to_list= data['add_to_list']
+        )
+
+        new_item.save()
+        new_item = new_item.__dict__
+        category = category.__dict__
+        new_item['category']  = category 
+        del new_item['_state']
+        del category['_state']
+
+
+        print("new_item = ", new_item)
+        return Response(new_item, status=status.HTTP_201_CREATED)
+        # return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

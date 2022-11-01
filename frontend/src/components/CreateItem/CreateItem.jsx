@@ -69,16 +69,14 @@ const CreateItem = (props) => {
             'category':  input.category,
             'expiration': input.expiration,
             'add_to_list': input.add_to_list,
-            'comments': input.comments
-
-    },
-        
+            'comments': input.comments 
+        }, 
          {
           headers: {
             "Content-Type":"application/json",
             Authorization: "Bearer " + token
             },
-      }
+        }
         
         )
 
