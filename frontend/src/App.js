@@ -10,7 +10,6 @@ import PantryPage from "./pages/PantryPage/Pantry";
 import CreateItem from "./components/CreateItem/CreateItem";
 import CartPage from "./pages/CartPage";
 import AboutPage from "./pages/AboutPage";
-
 import { AuthProvider } from "./context/AuthContext";
 
 import './index.css';
