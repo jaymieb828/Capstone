@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react';
-// import Axios from 'axios';
-import { useNavigate } from 'react-router-dom'
-// import { Table } from 'reactstrap';
-// import NewItemModal from "./NewItemModal";
-// import ConfirmRemovalModal from "./ConfirmRemovalModal";
+import Axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom'
+import { Table } from 'reactstrap';
+import NewItemModal from "./NewItemModal";
+import ConfirmRemovalModal from "./ConfirmRemovalModal";
 import useAuth from "../../hooks/useAuth";
 import axios from 'axios';
-// import CreateItem from '../CreateItem/CreateItem';
+import CreateItem from '../CreateItem/CreateItem';
 import AddItem from '../CreateItem/AddItem';
 import { baseUrl } from '../../shared';
-// import AddtoList from '../CreateItem/AddtoList';
-// import Avatar from '@mui/material/Avatar';
+import AddtoList from '../CreateItem/AddtoList';
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-// import CssBaseline from '@mui/material/CssBaseline';
-// import TextField from '@mui/material/TextField';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
-// import Paper from '@mui/material/Paper';
-// import Grid from '@mui/material/Grid';
-// import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import qs from 'qs';
 import { decode as base64_decode, encode as base64_encode } from 'base-64';
@@ -68,7 +68,7 @@ const DisplayItems = (props) => {
     }
 
     useEffect(() => {
-        
+        // generateKrogerAccessToken();
     }, [])
 
     function getCookie(name) {
@@ -239,7 +239,7 @@ const DisplayItems = (props) => {
         return {
             'id': elem.id,
             'item': elem.item, 
-            'category': elem.category.type,
+            'category': elem.category,
             'price': elem.price,
             'expiration': elem.expiration,
             'comments': elem.comments,

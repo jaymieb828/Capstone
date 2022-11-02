@@ -1,6 +1,6 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext"; 
 import { useContext } from "react";
 import  {makeStyles} from "@material-ui/core";
@@ -16,22 +16,28 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = [
-  ];
-
+  // 'Products', 'Pricing', 'Blog'
+];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
   const useStyles = makeStyles((theme) => ({
     navlinks: {
       marginLeft: theme.spacing(10),
@@ -58,7 +64,6 @@ function Navbar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography 
             sx={{
               mr: 2,
@@ -70,9 +75,6 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            <Link to='/'>
-            LOGO
-            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -114,7 +116,7 @@ function Navbar() {
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
+          {/* <Typography
             variant="h5"
             noWrap
             component="a"
@@ -130,8 +132,8 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            Welcome to My Pantry
-          </Typography>
+            LOGO
+          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}> 
 
             <Typography>

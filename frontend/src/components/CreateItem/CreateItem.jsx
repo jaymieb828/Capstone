@@ -18,7 +18,30 @@ const CreateItem = (props) => {
     const[itemComments, setComments] = useState('');
     const [user, token] = useAuth();
 
+    // function handleSubmit(event){
+    //     event.preventDefault();
+    //     let newItem ={
+    //         'Item': itemName,
+    //         'Quantity': itemQuantity,
+    //         'Category': itemCategory,
+    //         'Expiration': itemExp,
+    //         'Add To Shopping List': itemAddToList,
+    //         'Comments': itemComments
+    //     }
+
+    //     props.addNewItem(newItem);
+
+    //     setName('');
+    //     setQuantity('');
+    //     setExp('');
+    //     setCategory('');
+    //     setAddToList('');
+    //     setComments('');
+
     
+ 
+
+    // }
 
     const [input, setInput] = useState({
 
