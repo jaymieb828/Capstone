@@ -1,7 +1,6 @@
+ 
 from django.db import models
-
-# Create your models here.
-# from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField
  
 
 from decimal import Decimal
@@ -24,8 +23,8 @@ class Orders(models.Model):
     owner = models.ForeignKey(User,null=True, blank=True, related_name='owner', on_delete=models.CASCADE)
     order_url = models.CharField(max_length=1000, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    products = models.CharField(max_length=50, default=[])
-    quantities = models.PositiveIntegerField(default=[])
+    products = ArrayField(models.CharField(max_length=50), default=[])
+    quantities = ArrayField(models.PositiveIntegerField(), default=[])
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     delivery_method = models.CharField(max_length=30, default='')
     payment_method = models.CharField(max_length=30, default='')

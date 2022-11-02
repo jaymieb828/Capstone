@@ -1,6 +1,5 @@
 
 
-
 # Create your models here.
 from django.db import models
 from authentication.models import User
@@ -35,5 +34,7 @@ class Order(models.Model):
     subtotal = models.PositiveIntegerField(null=True)
     def __str__(self):
         return f" Order:{self.id} "
+    
+    
     
     

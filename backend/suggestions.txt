@@ -1,0 +1,27 @@
+1. Refactoring database layout -> removing un-necessary fileds and adding new for more functionality
+1.2 Refactoring Reactjs code. there are few things that needs to be removed and few things need change in code layout to follow react best practices
+
+2. On shoppinglist page instead of table ... we should have a vertical list of products
+    each product on shopping list page will have 
+    -> title, 
+    -> brand, 
+    -> category, 
+    -> price, 
+    -> images, 
+    -> zoom image options
+    -> Delivery options/status
+    -> shipToHome status
+    -> Sizes
+    -> Physical itemInformation (depth, height, width)
+    -> temperature instructions  like {"indicator": "Frozen", "heatSensitive": false}
+
+-> Suggestion 2 will make application more interactive
+
+3. On home page show list of all Products from all those stores locations that users recently searched for.
+
+4. New page for Add New item instead of popup. new page will be more interactive and we can display more information to user from Search API and also ability to select 
+Store location AND  Display on Map
+
+-> Displaying store location on map will increase User Experience (UI/UX)
+
+5. Adding some stuff to About Page

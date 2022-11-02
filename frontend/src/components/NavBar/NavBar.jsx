@@ -1,6 +1,6 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext"; 
 import { useContext } from "react";
 import  {makeStyles} from "@material-ui/core";
@@ -16,28 +16,22 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = [
-  // 'Products', 'Pricing', 'Blog'
-];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+  ];
+
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+
   const useStyles = makeStyles((theme) => ({
     navlinks: {
       marginLeft: theme.spacing(10),
@@ -76,9 +70,9 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            {/* <Link to='/'>
+            <Link to='/'>
             LOGO
-            </Link> */}
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -136,7 +130,7 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Welcome to My Pantry
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}> 
 

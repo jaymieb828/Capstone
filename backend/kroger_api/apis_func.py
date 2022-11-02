@@ -45,7 +45,6 @@ def identity():
     r = requests.get(url,headers=headers, data=data).json()
     print(r["data"["id"]])
     return r["data"["id"]]
+    
 
 
-
- 

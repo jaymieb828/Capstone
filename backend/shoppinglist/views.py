@@ -180,12 +180,18 @@ class UpdateCartProduct(views.APIView):
 
         # cart_obj.total += cp_obj.price
         # cart_obj.save()
-        quant = request.data["quantity"]
-        shop_list = ShoppingList.objects.get(id=request.data["id"])
-        shop_list.quantity = quant
+
+
+        incoming_data =  eval(request.body.decode('utf-8'))   
+        quant = incoming_data["quantity"] 
+        shop_list = ShoppingList.objects.get(id=int(incoming_data["id"]))
+        shop_list.quantity = quant 
         shop_list.total = shop_list.item.price * quant
         shop_list.save()
-        return Response({"message":"CartProduct Add Update","product":request.data['id']})
+
+        print("updatecartproduct")
+
+        return Response({"message":"CartProduct Add Update","product":incoming_data['id']})
 
 # class EditCartProduct(views.APIView):
 #     permission_classes=[AllowAny, ]
@@ -283,3 +289,4 @@ class Checkout(views.APIView):
         except:
             responsemessage = {"message":"Somthing wright"}
         return Response(responsemessage, status=status.HTTP_200_OK)
+
