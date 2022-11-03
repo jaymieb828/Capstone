@@ -102,6 +102,14 @@ export default function LoginPage() {
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
+      <div className='m-5'>
+  <div className='m-5'> 
+    <Typography className='m-5 p-5' sx={{boxShadow:3}} align='center'>
+      
+      <h4>My Pantry (powered by Kroger) is a fully functioning Pantry management system for all your home kitchen needs.</h4>
+    </Typography>
+  </div>
+  </div>
     </ThemeProvider>
   );
 }

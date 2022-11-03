@@ -156,6 +156,11 @@ function Navbar() {
               About
             </Link>
             </Typography>
+            <Typography>
+            <Link to="/recipes"  className={classes.link}>
+              Recipes
+            </Link>
+            </Typography>
 
           </Box>
 

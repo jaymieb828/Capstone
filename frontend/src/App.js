@@ -9,8 +9,9 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import PantryPage from "./pages/PantryPage/Pantry";
 import CreateItem from "./components/CreateItem/CreateItem";
 import CartPage from "./pages/CartPage";
-import AboutPage from "./pages/AboutPage";
-import { AuthProvider } from "./context/AuthContext";
+import AboutPage from "./pages/AboutPage/AboutPage";
+import RecipePage from "./pages/RecipePage/RecipePage";
+// import { AuthProvider } from "./context/AuthContext";
 
 import './index.css';
  
@@ -47,6 +48,8 @@ function App() {
         <Route path="/create-item" element={<CreateItem/>} />
         <Route path="/shopping-list" element={<CartPage/>} />
         <Route path="/about" element={<AboutPage/>} />
+        <Route path="/recipes" element={<RecipePage/>} />
+
 
 
       </Routes>
