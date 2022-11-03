@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
-// import { decode as base64_decode, encode as base64_encode } from 'base-64';
-
 import axios from 'axios';
-import CreateItem from '../../components/CreateItem/CreateItem';
 import DisplayItems from '../../components/DisplayItems/DisplayItems';
 import useAuth from "../../hooks/useAuth";
 
 const PantryPage = () => {
 
   const [items, setItems] = useState([]);
-  const [token] = useAuth();
+  const [user, token] = useAuth();
 
   useEffect(() => {
-    getAllItems()
-    getAllCat()
+    getAllItems();
   }, [])
 
 
@@ -28,11 +24,6 @@ const PantryPage = () => {
       });
     setItems(response.data)
   }
-
-
-
-
-
 
   async function getAllCat() {
     let response = await axios.get(`http://127.0.0.1:8000/api/pantry/`,

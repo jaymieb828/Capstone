@@ -19,9 +19,7 @@ const AboutPage = () => {
         <h4>About Jaymie</h4>
         <br></br>
         <br></br>
-        <h4>Jaymie is a veteran who served in the US Navy for 8 years. He is currently working as a Equipment Engineering Technician 
-          in semiconductor manufacturing. He is hoping to retain a Junior Software Engineering position upon completion of this bootcamp.
-          Jaymie lives in Connecticut with his wife and two children.
+        <h4>Jaymie is a Disabled Veteran who served in the US Navy and has worked as a Field Service Engineer in Semiconductor Manufacturing for nearly two decades. He is currently enrolled with devCodeCamp's full stack flex program in the hopes of pivoting his tech career from hardware to software. Jaymie was born and raised in Honolulu, HI and is currently living in Southbury, CT with his wife, Audrey, and his two children, Addison and Jace.
         </h4>
 
 
