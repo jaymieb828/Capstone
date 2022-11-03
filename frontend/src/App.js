@@ -74,29 +74,3 @@ export default App;
 
 
 
-
-
-// const loginUser = async (e) => {
-//     e.preventDefault()
-//     try {
-//       let response = await axios.post(`${BASE_URL}/token/`,{"username":e.target.username.value,"password":e.target.password.value},{
-  
-//   }
-//   );
-//       if (response.status === 200) {
-//         console.log(response.json())
-//         localStorage.setItem("token", JSON.stringify(response.data.access));
-//         setToken(JSON.parse(localStorage.getItem("token")));
-//         let loggedInUser = jwtDecode(response.data.access);
-//         setUser(setUserObject(loggedInUser));
-//         setIsServerError(false);
-//         navigate("/pantry");
-//       } else {
-//         navigate("/register");
-//       }
-//     } catch (error) {
-//       console.log(error.response.data);
-//       setIsServerError(true);
-//       navigate("/register");
-//     }
-//   };

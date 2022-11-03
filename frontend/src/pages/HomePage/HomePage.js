@@ -4,7 +4,7 @@ import { Typography } from '@mui/material';
 
 const HomePage = () => {
  
-  const [user, token] = useAuth();
+  const [user] = useAuth();
  
   
   useEffect(() => {
@@ -15,7 +15,7 @@ return (
 
   <div className='m-5'>
   <div className='m-5'> 
-    <Typography className='m-5 p-5' sx={{boxShadow:3}} align='justify'>
+    <Typography className='m-5 p-5' sx={{boxShadow:3}} align='center'>
       
       <br></br>
       {user && <h4>Hello, {user.username}</h4>}

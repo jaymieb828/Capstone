@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import useCustomForm from "../../hooks/useCustomForm";
 import Avatar from '@mui/material/Avatar';
@@ -16,15 +16,19 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
  
 const theme = createTheme(); 
+
 export default function LoginPage() { 
-    const { loginUser, isServerError } = useContext(AuthContext);
+    const { loginUser } = useContext(AuthContext);
     const defaultValues = { username: "", password: "" };
-    const [formData, handleInputChange, handleSubmit, reset] = useCustomForm(
+    const [formData, handleInputChange, handleSubmit] = useCustomForm(
     defaultValues,
     loginUser
     );
+
+
 
   return (
     <ThemeProvider theme={theme}>
