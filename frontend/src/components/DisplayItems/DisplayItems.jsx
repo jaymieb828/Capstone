@@ -77,7 +77,7 @@ const DisplayItems = (props) => {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
+                
                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
@@ -139,7 +139,6 @@ const DisplayItems = (props) => {
 
 
     const [searchTerm, setSearchTerm] = useState('');
-    // function newItem(productId,upc,item, quantity, price, expiration, comments, category, add_to_list = '') {
     function newItem(productId,upc,item,  price, expiration, comments, category) {
  
         const data = {productId:productId, upc:upc, item: item, price: parseFloat(price),  expiration: expiration, comments: comments, category: category };
